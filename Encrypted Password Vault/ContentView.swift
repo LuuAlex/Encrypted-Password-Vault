@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var showResult: Bool = false
+    @State var result: String
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -16,6 +18,16 @@ struct ContentView: View {
             Text("Hello, world!")
         }
         .padding()
+        
+        Button(action: {
+            result = runPythonCode(read: true)
+            showResult.toggle()
+        }) {
+            Text("See Passwords")
+        }
+        if showResult {
+            Text(String("\(result)"))
+        }
     }
 }
 

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PythonKit
 
 @main
 struct Encrypted_Password_VaultApp: App {
@@ -13,5 +14,16 @@ struct Encrypted_Password_VaultApp: App {
         WindowGroup {
             ContentView()
         }
+    }
+}
+
+func runPythonCode(read: Bool) -> PythonObject {
+    let sys = Python.import("sys")
+    sys.path.append("/Users/alexluu/Documents/GitHub/Encrypted Password Vault/Encrypted Password Vault")
+    let file = Python.import("script.py")
+    if read {
+        return file.read()
+    } else {
+        return file.write()
     }
 }
