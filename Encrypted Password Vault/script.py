@@ -9,9 +9,9 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 # Password Tool - convertPassword to key
 def convertPassword(password, salt):
-    password = bytes(password, "utf-8")
+    password = password.encode()
     if not isinstance(salt, bytes):
-        salt = bytes(str(salt), "utf-8")
+        salt = str(salt).encode()
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA256(),
         length=32,
@@ -21,8 +21,9 @@ def convertPassword(password, salt):
     return base64.urlsafe_b64encode(kdf.derive(password))
 
 def getFernet(password):
-    with open('passwordData.csv', 'rb') as enc_file:
-        salt = enc_file.readline()[-1]
+    with open('salt.txt', 'rb') as enc_file:
+        salt = enc_file.read()
+        enc_file.close()
     key = convertPassword(password, salt)
     return Fernet(key), salt
 
@@ -32,16 +33,21 @@ def create_csv(password):
     # Create the Key
     salt = os.urandom(16)
     key = convertPassword(password, salt)
+    saltKey = open('salt.txt', 'wb')
+    saltKey.write(salt)
+    saltKey.close()
     f = Fernet(key)
 
     # Create the File
-    file = open('passwordData.csv', 'w+', newline='')
+    file = open('passwordData.csv', 'rb')
 
     # Encrypt and Rewrite the File
-    encrypted = f.encrypt(bytes(file.read(), "utf-8"))
-    with open('passwordData.csv', 'w+', newline='') as encrypted_file:
-        encrypted_file.write(str(encrypted))
-        encrypted_file.writelines(str(salt)) # add salt
+    encrypted = f.encrypt(file.read())
+    encrypted_file = open('passwordData.csv', 'wb')
+    encrypted_file.write(encrypted)
+
+    file.close()
+    encrypted_file.close()
     
     
 def read(password):
@@ -49,11 +55,12 @@ def read(password):
     f, salt = getFernet(password)
         
     # Decrypt File
-    with open('passwordData.csv', 'rb') as enc_file:
-        encrypted = enc_file.read()
+    enc_file = open('passwordData.csv', 'rb')
+    encrypted = enc_file.read()
     try:
         decrypted = f.decrypt(encrypted)
     except:
+        print("Failed to decrypt")
         return
 
     return decrypted
