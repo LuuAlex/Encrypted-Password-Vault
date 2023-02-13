@@ -7,8 +7,11 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 
-def initialize(pDP, sP):
-    return pDP + "/passwordData.csv", sP + "/salt.txt"
+def initialize(path):
+    path = path + "/EncryptedPasswordVault_UserData"
+    if not os.path.exists(path):
+        os.makedirs(path)
+    return path + "/passwordData.csv", path + "/salt.txt"
 
 # Password Tool - convertPassword to key
 def convertPassword(password, salt):
@@ -24,8 +27,8 @@ def convertPassword(password, salt):
     return base64.urlsafe_b64encode(kdf.derive(password))
 
 # Password Tool - create Fernet
-def getFernet(pDP, sP, password):
-    passwordDataPath, saltPath = initialize(pDP, sP)
+def getFernet(path, password):
+    passwordDataPath, saltPath = initialize(path)
 
     with open(saltPath, 'rb') as enc_file:
         salt = enc_file.read()
@@ -35,8 +38,8 @@ def getFernet(pDP, sP, password):
 
 
 
-def create_csv(pDP, sP, password):
-    passwordDataPath, saltPath = initialize(pDP, sP)
+def create_csv(path, password):
+    passwordDataPath, saltPath = initialize(path)
 
     # Create the Key
     salt = os.urandom(16)
@@ -47,6 +50,8 @@ def create_csv(pDP, sP, password):
     f = Fernet(key)
 
     # Create the File
+    fileX = open(passwordDataPath, 'wb')
+    fileX.close()
     file = open(passwordDataPath, 'rb')
 
     # Encrypt and Rewrite the File
@@ -57,9 +62,9 @@ def create_csv(pDP, sP, password):
     file.close()
     encrypted_file.close()
 
-def changePassword(pDP, sP, password, newPassword):
-    passwordDataPath, saltPath = initialize(pDP, sP)
-    decrypted = decrypt(pDP, sP, password)
+def changePassword(path, password, newPassword):
+    passwordDataPath, saltPath = initialize(path)
+    decrypted = decrypt(path, password)
 
     # Create the Key
     salt = os.urandom(16)
@@ -76,10 +81,10 @@ def changePassword(pDP, sP, password, newPassword):
 
     encrypted_file.close()
     
-def decrypt(pDP, sP, password):
+def decrypt(path, password):
     # Get Key and Paths
-    passwordDataPath, saltPath = initialize(pDP, sP)
-    f, salt = getFernet(password)
+    passwordDataPath, saltPath = initialize(path)
+    f, salt = getFernet(path, password)
         
     # Decrypt File
     enc_file = open(passwordDataPath, 'rb')
@@ -93,10 +98,10 @@ def decrypt(pDP, sP, password):
 
     return decrypted.decode()
 
-def encrypt(pDP, sP, password, dataString):
+def encrypt(path, password, dataString):
     # Get Key and Paths
-    passwordDataPath, saltPath = initialize(pDP, sP)
-    f, salt = getFernet(password)
+    passwordDataPath, saltPath = initialize(path)
+    f, salt = getFernet(path, password)
 
     # Encrypt File
     encrypted = f.encrypt(dataString.encode())
@@ -106,10 +111,10 @@ def encrypt(pDP, sP, password, dataString):
 
 
 
-def read(pDP, sP, password):
+def read(path, password):
     # Get Key and Paths
-    passwordDataPath, saltPath = initialize(pDP, sP)
-    f, salt = getFernet(password)
+    passwordDataPath, saltPath = initialize(path)
+    f, salt = getFernet(path, password)
         
     # Decrypt File
     enc_file = open(passwordDataPath, 'rb')
@@ -124,32 +129,34 @@ def read(pDP, sP, password):
     return decrypted.decode()
 
 # write new password entry; newDataEntry = [KEY, USER, PASS]
-def write(pDP, sP, password, newDataEntry):
+def write(path, password, newDataEntry):
     # Decrypt File
-    writer = decrypt(pDP, sP, password)
+    writer = decrypt(path, password)
 
     # Add New Entry
+    writer = writer + "\r\n"
     for x in newDataEntry:
         writer = writer + str(x) + ","
     writer = writer[0:len(writer) - 1]
-    writer = writer + "\r\n"
     
     # Encrypt and Rewrite the File
-    encrypt(pDP, sP, password, writer)
+    encrypt(path, password, writer)
 
 # deletes entry with "key", so cannot have duplicate keys
-def delete(pDP, sP, password, key):
+def delete(path, password, key):
     # Decrypt File
-    writer = decrypt(pDP, sP, password)
+    writer = decrypt(path, password)
 
     # Delete Entry
-    pos1 = writer.find("\r\n" + key + ",") + 2
+    pos1 = writer.find("\r\n" + key + ",")
+    pos2 = writer.find("\r\n", pos1 + 2)
+    if pos2 == -1:
+        pos2 = len(writer)
     if pos1 == -1:
-        pos1 = writer.find(key + ",")
-    pos2 = writer.find("\r\n", pos1) + 2
+        return
     writer = writer[0:pos1] + writer[pos2:]
     
     # Encrypt and Rewrite the File
-    encrypt(pDP, sP, password, writer)
+    encrypt(path, password, writer)
 
     
