@@ -104,26 +104,54 @@ class TestStringMethods(unittest.TestCase):
         script.create_csv(path, password)
 
         ans = ""
+        keys = []
         randomChar = "1234567890abcdefghijklmnopqrstuvwxyz!@#$%^&*"
-        for _ in range(200):
-            string1 = ""
-            string2 = ""
-            string3 = ""
-            num = random.randrange(1, 25)
-            for i in range(num):
-                string1 += randomChar[random.randrange(len(randomChar))]
-            num = random.randrange(1, 25)
-            for i in range(num):
-                string2 += randomChar[random.randrange(len(randomChar))]
-            num = random.randrange(1, 25)
-            for i in range(num):
-                string3 += randomChar[random.randrange(len(randomChar))]
+        for _ in range(250):
+            x = random.random()
+
+            # write
+            if x < 0.4:
+                string1 = ""
+                string2 = ""
+                string3 = ""
+                num = random.randrange(1, 25)
+                for i in range(num):
+                    string1 += randomChar[random.randrange(len(randomChar))]
+                num = random.randrange(1, 25)
+                for i in range(num):
+                    string2 += randomChar[random.randrange(len(randomChar))]
+                num = random.randrange(1, 25)
+                for i in range(num):
+                    string3 += randomChar[random.randrange(len(randomChar))]
+                keys += [string1]
+                
+                script.write(path, password, [string1, string2, string3])
+                ans += f"\r\n{string1},{string2},{string3}"
+                self.assertEqual(script.read(path, password), ans)
             
-            script.write(path, password, [string1, string2, string3])
-            ans += f"\r\n{string1},{string2},{string3}"
-            self.assertEqual(script.read(path, password), ans)
+            # delete
+            elif x < 0.8 and len(keys) > 0:
+                num = random.randrange(len(keys))
+                value = keys.pop(num)
+                script.delete(path, password, value)
+                
+                pos1 = ans.find("\r\n" + value + ",")
+                pos2 = ans.find("\r\n", pos1 + 2)
+                if pos2 == -1:
+                    pos2 = len(ans)
+                if pos1 == -1:
+                    return
+                ans = ans[0:pos1] + ans[pos2:]
+                self.assertEqual(script.read(path, password), ans)
 
-
+            # change password
+            else:
+                newPassword = ""
+                num = random.randrange(1, 35)
+                for i in range(num):
+                    newPassword += randomChar[random.randrange(len(randomChar))]
+                script.changePassword(path, password, newPassword)
+                password = newPassword
 
 
 
