@@ -59,7 +59,7 @@ def create_csv(pDP, sP, password):
 
 def changePassword(pDP, sP, password, newPassword):
     passwordDataPath, saltPath = initialize(pDP, sP)
-    decrypted = decrypt(password)
+    decrypted = decrypt(pDP, sP, password)
 
     # Create the Key
     salt = os.urandom(16)
@@ -93,13 +93,13 @@ def decrypt(pDP, sP, password):
 
     return decrypted.decode()
 
-def encrypt(pDP, sP, password, encoded):
+def encrypt(pDP, sP, password, dataString):
     # Get Key and Paths
     passwordDataPath, saltPath = initialize(pDP, sP)
     f, salt = getFernet(password)
 
     # Encrypt File
-    encrypted = f.encrypt(encoded)
+    encrypted = f.encrypt(dataString.encode())
     encrypted_file = open(passwordDataPath, 'wb')
     encrypted_file.write(encrypted)
     encrypted_file.close()
@@ -125,31 +125,22 @@ def read(pDP, sP, password):
 
 # write new password entry; newDataEntry = [KEY, USER, PASS]
 def write(pDP, sP, password, newDataEntry):
-    # Get Key and Paths
-    passwordDataPath, saltPath = initialize(pDP, sP)
-    f, salt = getFernet(password)
-
     # Decrypt File
-    writer = decrypt(password)
+    writer = decrypt(pDP, sP, password)
 
     # Add New Entry
     for x in newDataEntry:
         writer = writer + str(x) + ","
     writer = writer[0:len(writer) - 1]
     writer = writer + "\r\n"
-    encoded = writer.encode()
     
     # Encrypt and Rewrite the File
-    encrypt(pDP, sP, password, encoded)
+    encrypt(pDP, sP, password, writer)
 
 # deletes entry with "key", so cannot have duplicate keys
 def delete(pDP, sP, password, key):
-    # Get Key and Paths
-    passwordDataPath, saltPath = initialize(pDP, sP)
-    f, salt = getFernet(password)
-
     # Decrypt File
-    writer = decrypt(password)
+    writer = decrypt(pDP, sP, password)
 
     # Delete Entry
     pos1 = writer.find("\r\n" + key + ",") + 2
@@ -157,12 +148,8 @@ def delete(pDP, sP, password, key):
         pos1 = writer.find(key + ",")
     pos2 = writer.find("\r\n", pos1) + 2
     writer = writer[0:pos1] + writer[pos2:]
-    encoded = writer.encode()
     
     # Encrypt and Rewrite the File
-    encrypt(pDP, sP, password, encoded)
+    encrypt(pDP, sP, password, writer)
 
     
-    
-
-
