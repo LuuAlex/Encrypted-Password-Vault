@@ -57,30 +57,75 @@ def read(password):
     # Decrypt File
     enc_file = open('passwordData.csv', 'rb')
     encrypted = enc_file.read()
+    enc_file.close()
     try:
         decrypted = f.decrypt(encrypted)
     except:
         print("Failed to decrypt")
-        return
+        return None
 
-    return decrypted
+    return decrypted.decode()
 
 
 # write new password entry; newDataEntry = [KEY, USER, PASS]
 def write(password, newDataEntry):
-    decrypted = read(password)
-    if (not decrypted):
-        return
-    writer = decrypted
-    writer.writerows(newDataEntry)
-
+    # Get Key
     f, salt = getFernet(password)
+
+    # Decrypt File
+    enc_file = open('passwordData.csv', 'rb')
+    encrypted = enc_file.read()
+    enc_file.close()
+    try:
+        decrypted = f.decrypt(encrypted)
+    except:
+        print("Failed to decrypt")
+        return None
+
+    # Add New Entry
+    writer = decrypted.decode()
+    for x in newDataEntry:
+        writer = writer + str(x) + ","
+    writer = writer[0:len(writer) - 1]
+    writer = writer + "\r\n"
+    endoded = writer.encode()
     
     # Encrypt and Rewrite the File
-    encrypted = f.encrypt(writer)
-    with open('passwordData.csv', 'wb') as encrypted_file:
-        encrypted_file.write(encrypted)
-        csv.writer(encrypted_file).writerows(["SALT", salt]) # add salt
+    encrypted = f.encrypt(endoded)
+    encrypted_file = open('passwordData.csv', 'wb')
+    encrypted_file.write(encrypted)
+    encrypted_file.close()
+
+def delete(password, key):
+    # Get Key
+    f, salt = getFernet(password)
+
+    # Decrypt File
+    enc_file = open('passwordData.csv', 'rb')
+    encrypted = enc_file.read()
+    enc_file.close()
+    try:
+        decrypted = f.decrypt(encrypted)
+    except:
+        print("Failed to decrypt")
+        return None
+
+    # Delete Entry
+    writer = decrypted.decode()
+    pos1 = writer.find("\r\n" + key + ",") + 2
+    if pos1 == -1:
+        pos1 = writer.find(key + ",")
+    print(pos1)
+    pos2 = writer.find("\r\n", pos1) + 2
+    print(pos2)
+    writer = writer[0:pos1] + writer[pos2:]
+    endoded = writer.encode()
+    
+    # Encrypt and Rewrite the File
+    encrypted = f.encrypt(endoded)
+    encrypted_file = open('passwordData.csv', 'wb')
+    encrypted_file.write(encrypted)
+    encrypted_file.close()
 
     
     
