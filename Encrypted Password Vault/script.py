@@ -20,6 +20,7 @@ def convertPassword(password, salt):
     )
     return base64.urlsafe_b64encode(kdf.derive(password))
 
+# Password Tool - create Fernet
 def getFernet(password):
     with open('salt.txt', 'rb') as enc_file:
         salt = enc_file.read()
@@ -48,9 +49,26 @@ def create_csv(password):
 
     file.close()
     encrypted_file.close()
+
+def changePassword(password, newPassword):
+    decrypted = decrypt(password)
+
+    # Create the Key
+    salt = os.urandom(16)
+    key = convertPassword(newPassword, salt)
+    saltKey = open('salt.txt', 'wb')
+    saltKey.write(salt)
+    saltKey.close()
+    f = Fernet(key)
+
+    # Encrypt and Rewrite the File
+    encrypted = f.encrypt(decrypted.encode())
+    encrypted_file = open('passwordData.csv', 'wb')
+    encrypted_file.write(encrypted)
+
+    encrypted_file.close()
     
-    
-def read(password):
+def decrypt(password):
     # Get Key
     f, salt = getFernet(password)
         
@@ -67,11 +85,11 @@ def read(password):
     return decrypted.decode()
 
 
-# write new password entry; newDataEntry = [KEY, USER, PASS]
-def write(password, newDataEntry):
+
+def read(password):
     # Get Key
     f, salt = getFernet(password)
-
+        
     # Decrypt File
     enc_file = open('passwordData.csv', 'rb')
     encrypted = enc_file.read()
@@ -82,8 +100,17 @@ def write(password, newDataEntry):
         print("Failed to decrypt")
         return None
 
+    return decrypted.decode()
+
+# write new password entry; newDataEntry = [KEY, USER, PASS]
+def write(password, newDataEntry):
+    # Get Key
+    f, salt = getFernet(password)
+
+    # Decrypt File
+    writer = decrypt(password)
+
     # Add New Entry
-    writer = decrypted.decode()
     for x in newDataEntry:
         writer = writer + str(x) + ","
     writer = writer[0:len(writer) - 1]
@@ -96,28 +123,19 @@ def write(password, newDataEntry):
     encrypted_file.write(encrypted)
     encrypted_file.close()
 
+# deletes entry with "key", so cannot have duplicate keys
 def delete(password, key):
     # Get Key
     f, salt = getFernet(password)
 
     # Decrypt File
-    enc_file = open('passwordData.csv', 'rb')
-    encrypted = enc_file.read()
-    enc_file.close()
-    try:
-        decrypted = f.decrypt(encrypted)
-    except:
-        print("Failed to decrypt")
-        return None
+    writer = decrypt(password)
 
     # Delete Entry
-    writer = decrypted.decode()
     pos1 = writer.find("\r\n" + key + ",") + 2
     if pos1 == -1:
         pos1 = writer.find(key + ",")
-    print(pos1)
     pos2 = writer.find("\r\n", pos1) + 2
-    print(pos2)
     writer = writer[0:pos1] + writer[pos2:]
     endoded = writer.encode()
     
