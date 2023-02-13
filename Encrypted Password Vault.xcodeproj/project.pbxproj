@@ -17,6 +17,7 @@
 		67063F6A299972B30043EA60 /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 67063F69299972B30043EA60 /* PythonKit */; };
 		67063F6C2999756C0043EA60 /* script.py in Resources */ = {isa = PBXBuildFile; fileRef = 67063F6B2999756C0043EA60 /* script.py */; };
 		67063F6E2999789A0043EA60 /* DataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67063F6D2999789A0043EA60 /* DataObject.swift */; };
+		67063F702999C42D0043EA60 /* script_tests.py in Resources */ = {isa = PBXBuildFile; fileRef = 67063F6F2999C42D0043EA60 /* script_tests.py */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		67063F5B29996FAD0043EA60 /* Encrypted_Password_VaultUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encrypted_Password_VaultUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		67063F6B2999756C0043EA60 /* script.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
 		67063F6D2999789A0043EA60 /* DataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataObject.swift; sourceTree = "<group>"; };
+		67063F6F2999C42D0043EA60 /* script_tests.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = script_tests.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				67063F3F29996FAB0043EA60 /* ContentView.swift */,
 				67063F6D2999789A0043EA60 /* DataObject.swift */,
 				67063F6B2999756C0043EA60 /* script.py */,
+				67063F6F2999C42D0043EA60 /* script_tests.py */,
 				67063F4129996FAC0043EA60 /* Assets.xcassets */,
 				67063F4629996FAC0043EA60 /* Encrypted_Password_Vault.entitlements */,
 				67063F4329996FAC0043EA60 /* Preview Content */,
@@ -248,6 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				67063F4529996FAC0043EA60 /* Preview Assets.xcassets in Resources */,
+				67063F702999C42D0043EA60 /* script_tests.py in Resources */,
 				67063F6C2999756C0043EA60 /* script.py in Resources */,
 				67063F4229996FAC0043EA60 /* Assets.xcassets in Resources */,
 			);

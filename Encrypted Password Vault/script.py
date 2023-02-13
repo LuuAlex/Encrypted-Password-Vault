@@ -6,9 +6,9 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
+
 def initialize(pDP, sP):
-    passwordDataPath = pDP + "/passwordData.csv"
-    saltPath = sP + "/salt.txt"
+    return pDP + "/passwordData.csv", sP + "/salt.txt"
 
 # Password Tool - convertPassword to key
 def convertPassword(password, salt):
@@ -24,7 +24,9 @@ def convertPassword(password, salt):
     return base64.urlsafe_b64encode(kdf.derive(password))
 
 # Password Tool - create Fernet
-def getFernet(password):
+def getFernet(pDP, sP, password):
+    passwordDataPath, saltPath = initialize(pDP, sP)
+
     with open(saltPath, 'rb') as enc_file:
         salt = enc_file.read()
         enc_file.close()
@@ -33,7 +35,9 @@ def getFernet(password):
 
 
 
-def create_csv(password):
+def create_csv(pDP, sP, password):
+    passwordDataPath, saltPath = initialize(pDP, sP)
+
     # Create the Key
     salt = os.urandom(16)
     key = convertPassword(password, salt)
@@ -53,7 +57,8 @@ def create_csv(password):
     file.close()
     encrypted_file.close()
 
-def changePassword(password, newPassword):
+def changePassword(pDP, sP, password, newPassword):
+    passwordDataPath, saltPath = initialize(pDP, sP)
     decrypted = decrypt(password)
 
     # Create the Key
@@ -71,8 +76,9 @@ def changePassword(password, newPassword):
 
     encrypted_file.close()
     
-def decrypt(password):
-    # Get Key
+def decrypt(pDP, sP, password):
+    # Get Key and Paths
+    passwordDataPath, saltPath = initialize(pDP, sP)
     f, salt = getFernet(password)
         
     # Decrypt File
@@ -87,10 +93,22 @@ def decrypt(password):
 
     return decrypted.decode()
 
+def encrypt(pDP, sP, password, encoded):
+    # Get Key and Paths
+    passwordDataPath, saltPath = initialize(pDP, sP)
+    f, salt = getFernet(password)
+
+    # Encrypt File
+    encrypted = f.encrypt(encoded)
+    encrypted_file = open(passwordDataPath, 'wb')
+    encrypted_file.write(encrypted)
+    encrypted_file.close()
 
 
-def read(password):
-    # Get Key
+
+def read(pDP, sP, password):
+    # Get Key and Paths
+    passwordDataPath, saltPath = initialize(pDP, sP)
     f, salt = getFernet(password)
         
     # Decrypt File
@@ -106,8 +124,9 @@ def read(password):
     return decrypted.decode()
 
 # write new password entry; newDataEntry = [KEY, USER, PASS]
-def write(password, newDataEntry):
-    # Get Key
+def write(pDP, sP, password, newDataEntry):
+    # Get Key and Paths
+    passwordDataPath, saltPath = initialize(pDP, sP)
     f, salt = getFernet(password)
 
     # Decrypt File
@@ -118,17 +137,15 @@ def write(password, newDataEntry):
         writer = writer + str(x) + ","
     writer = writer[0:len(writer) - 1]
     writer = writer + "\r\n"
-    endoded = writer.encode()
+    encoded = writer.encode()
     
     # Encrypt and Rewrite the File
-    encrypted = f.encrypt(endoded)
-    encrypted_file = open(passwordDataPath, 'wb')
-    encrypted_file.write(encrypted)
-    encrypted_file.close()
+    encrypt(pDP, sP, password, encoded)
 
 # deletes entry with "key", so cannot have duplicate keys
-def delete(password, key):
-    # Get Key
+def delete(pDP, sP, password, key):
+    # Get Key and Paths
+    passwordDataPath, saltPath = initialize(pDP, sP)
     f, salt = getFernet(password)
 
     # Decrypt File
@@ -140,13 +157,10 @@ def delete(password, key):
         pos1 = writer.find(key + ",")
     pos2 = writer.find("\r\n", pos1) + 2
     writer = writer[0:pos1] + writer[pos2:]
-    endoded = writer.encode()
+    encoded = writer.encode()
     
     # Encrypt and Rewrite the File
-    encrypted = f.encrypt(endoded)
-    encrypted_file = open(passwordDataPath, 'wb')
-    encrypted_file.write(encrypted)
-    encrypted_file.close()
+    encrypt(pDP, sP, password, encoded)
 
     
     
