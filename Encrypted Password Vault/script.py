@@ -6,6 +6,9 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
+def initialize(pDP, sP):
+    passwordDataPath = pDP + "/passwordData.csv"
+    saltPath = sP + "/salt.txt"
 
 # Password Tool - convertPassword to key
 def convertPassword(password, salt):
@@ -22,7 +25,7 @@ def convertPassword(password, salt):
 
 # Password Tool - create Fernet
 def getFernet(password):
-    with open('salt.txt', 'rb') as enc_file:
+    with open(saltPath, 'rb') as enc_file:
         salt = enc_file.read()
         enc_file.close()
     key = convertPassword(password, salt)
@@ -34,17 +37,17 @@ def create_csv(password):
     # Create the Key
     salt = os.urandom(16)
     key = convertPassword(password, salt)
-    saltKey = open('salt.txt', 'wb')
+    saltKey = open(saltPath, 'wb')
     saltKey.write(salt)
     saltKey.close()
     f = Fernet(key)
 
     # Create the File
-    file = open('passwordData.csv', 'rb')
+    file = open(passwordDataPath, 'rb')
 
     # Encrypt and Rewrite the File
     encrypted = f.encrypt(file.read())
-    encrypted_file = open('passwordData.csv', 'wb')
+    encrypted_file = open(passwordDataPath, 'wb')
     encrypted_file.write(encrypted)
 
     file.close()
@@ -56,14 +59,14 @@ def changePassword(password, newPassword):
     # Create the Key
     salt = os.urandom(16)
     key = convertPassword(newPassword, salt)
-    saltKey = open('salt.txt', 'wb')
+    saltKey = open(saltPath, 'wb')
     saltKey.write(salt)
     saltKey.close()
     f = Fernet(key)
 
     # Encrypt and Rewrite the File
     encrypted = f.encrypt(decrypted.encode())
-    encrypted_file = open('passwordData.csv', 'wb')
+    encrypted_file = open(passwordDataPath, 'wb')
     encrypted_file.write(encrypted)
 
     encrypted_file.close()
@@ -73,7 +76,7 @@ def decrypt(password):
     f, salt = getFernet(password)
         
     # Decrypt File
-    enc_file = open('passwordData.csv', 'rb')
+    enc_file = open(passwordDataPath, 'rb')
     encrypted = enc_file.read()
     enc_file.close()
     try:
@@ -91,7 +94,7 @@ def read(password):
     f, salt = getFernet(password)
         
     # Decrypt File
-    enc_file = open('passwordData.csv', 'rb')
+    enc_file = open(passwordDataPath, 'rb')
     encrypted = enc_file.read()
     enc_file.close()
     try:
@@ -119,7 +122,7 @@ def write(password, newDataEntry):
     
     # Encrypt and Rewrite the File
     encrypted = f.encrypt(endoded)
-    encrypted_file = open('passwordData.csv', 'wb')
+    encrypted_file = open(passwordDataPath, 'wb')
     encrypted_file.write(encrypted)
     encrypted_file.close()
 
@@ -141,7 +144,7 @@ def delete(password, key):
     
     # Encrypt and Rewrite the File
     encrypted = f.encrypt(endoded)
-    encrypted_file = open('passwordData.csv', 'wb')
+    encrypted_file = open(passwordDataPath, 'wb')
     encrypted_file.write(encrypted)
     encrypted_file.close()
 
