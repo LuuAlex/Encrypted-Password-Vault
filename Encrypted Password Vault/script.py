@@ -51,16 +51,13 @@ def create_csv(path, password):
 
     # Create the File
     fileX = open(passwordDataPath, 'wb')
+    fileX.write("".encode()) # delete previous data
     fileX.close()
     file = open(passwordDataPath, 'rb')
 
     # Encrypt and Rewrite the File
-    encrypted = f.encrypt(file.read())
-    encrypted_file = open(passwordDataPath, 'wb')
-    encrypted_file.write(encrypted)
-
+    encrypt(path, password, file.read().decode())
     file.close()
-    encrypted_file.close()
 
 def changePassword(path, password, newPassword):
     passwordDataPath, saltPath = initialize(path)
@@ -68,18 +65,12 @@ def changePassword(path, password, newPassword):
 
     # Create the Key
     salt = os.urandom(16)
-    key = convertPassword(newPassword, salt)
     saltKey = open(saltPath, 'wb')
     saltKey.write(salt)
     saltKey.close()
-    f = Fernet(key)
 
     # Encrypt and Rewrite the File
-    encrypted = f.encrypt(decrypted.encode())
-    encrypted_file = open(passwordDataPath, 'wb')
-    encrypted_file.write(encrypted)
-
-    encrypted_file.close()
+    encrypt(path, newPassword, decrypted)
     
 def decrypt(path, password):
     # Get Key and Paths

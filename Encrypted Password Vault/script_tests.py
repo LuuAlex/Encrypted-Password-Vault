@@ -1,5 +1,6 @@
 import unittest
 import script
+import random
 
 class TestStringMethods(unittest.TestCase):
 
@@ -95,6 +96,35 @@ class TestStringMethods(unittest.TestCase):
 
 
         #os.remove('/Users/alexluu/Documents/GitHub/Encrypted Password Vault/Encrypted Password Vault/EncryptedPasswordVault_UserData')
+    
+    def test_random(self):
+        password = "129vhxve4gef8$3B*B&"
+        path = "/Users/alexluu/Documents/GitHub/Encrypted Password Vault/Encrypted Password Vault"
+        script.initialize(path)
+        script.create_csv(path, password)
+
+        ans = ""
+        randomChar = "1234567890abcdefghijklmnopqrstuvwxyz!@#$%^&*"
+        for _ in range(200):
+            string1 = ""
+            string2 = ""
+            string3 = ""
+            num = random.randrange(1, 25)
+            for i in range(num):
+                string1 += randomChar[random.randrange(len(randomChar))]
+            num = random.randrange(1, 25)
+            for i in range(num):
+                string2 += randomChar[random.randrange(len(randomChar))]
+            num = random.randrange(1, 25)
+            for i in range(num):
+                string3 += randomChar[random.randrange(len(randomChar))]
+            
+            script.write(path, password, [string1, string2, string3])
+            ans += f"\r\n{string1},{string2},{string3}"
+            self.assertEqual(script.read(path, password), ans)
+
+
+
 
 
 if __name__ == '__main__':
