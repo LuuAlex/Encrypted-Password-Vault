@@ -8,26 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var showResult: Bool = false
-    @State var result: String
+    @State private var path = ""
+    @State private var password = ""
+    
     var body: some View {
         VStack {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
             Text("Hello, world!")
+            
+            TextField("", text: $path) {
+                
+            }
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            TextField("", text: $password) {
+                
+            }
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            Text(String(runRead(path: path, password: password)[0].getPass()))
         }
         .padding()
         
-        Button(action: {
-            result = runPythonCode(read: true)
-            showResult.toggle()
-        }) {
-            Text("See Passwords")
-        }
-        if showResult {
-            Text(String("\(result)"))
-        }
+        
     }
 }
 

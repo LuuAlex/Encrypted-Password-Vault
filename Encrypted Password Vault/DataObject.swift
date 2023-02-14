@@ -12,10 +12,10 @@ class DataObject {
     private var user: String
     private var pass: String
     
-    init(key: String, user: String, pass: String) {
-        self.key = key
-        self.user = user
-        self.pass = pass
+    init(array: [String]) {
+        self.key = array[0]
+        self.user = array[1]
+        self.pass = array[2]
     }
     
     func getKey() -> String {
