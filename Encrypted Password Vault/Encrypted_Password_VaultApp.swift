@@ -7,6 +7,8 @@
 
 import SwiftUI
 import PythonKit
+import Foundation
+import Python
 
 @main
 struct Encrypted_Password_VaultApp: App {
@@ -18,16 +20,17 @@ struct Encrypted_Password_VaultApp: App {
 }
 
 
-func runCreateCSV(path: String, password: String) {
-    PythonLibrary.useLibrary(at: "/Users/alexluu/Documents/GitHub/Encrypted Password Vault/Encrypted Password Vault/.venv/bin/python3")
-    let os = Python.import("os")
-    let base64 = Python.import("base64")
-    let csv = Python.import("csv")
-    let cryptography = Python.import("cryptography")
-    let Fernet = Python.import("cryptography.fernet")
-    let hashes = Python.import("cryptography.hazmat.primitives")
-    let PBKDF2HMAC = Python.import("ryptography.hazmat.primitives.kdf.pbkdf2")
 
+func activate() {
+    guard let stdLibPath = Bundle.main.path(forResource: "python-stdlib", ofType: nil) else { return }
+    guard let libDynloadPath = Bundle.main.path(forResource: "python-stdlib/lib-dynload", ofType: nil) else { return }
+    setenv("PYTHONHOME", stdLibPath, 1)
+    setenv("PYTHONPATH", "\(stdLibPath):\(libDynloadPath)", 1)
+    Py_Initialize()
+}
+
+func runCreateCSV(path: String, password: String) {
+    activate()
     
     let sys = Python.import("sys")
     sys.path.append("/Users/alexluu/Documents/GitHub/Encrypted Password Vault/Encrypted Password Vault")
@@ -36,16 +39,8 @@ func runCreateCSV(path: String, password: String) {
 }
 
 func runRead(path: String, password: String) -> [DataObject] {
-    PythonLibrary.useLibrary(at: "/Users/alexluu/Documents/GitHub/Encrypted Password Vault/Encrypted Password Vault/.venv/bin/python3")
-    let os = Python.import("os")
-    let base64 = Python.import("base64")
-    let csv = Python.import("csv")
-    let cryptography = Python.import("cryptography")
-    let Fernet = Python.import("cryptography.fernet")
-    let hashes = Python.import("cryptography.hazmat.primitives")
-    let PBKDF2HMAC = Python.import("ryptography.hazmat.primitives.kdf.pbkdf2")
-    
-    
+    activate()
+
     let sys = Python.import("sys")
     sys.path.append("/Users/alexluu/Documents/GitHub/Encrypted Password Vault/Encrypted Password Vault")
     let file = Python.import("script.py")

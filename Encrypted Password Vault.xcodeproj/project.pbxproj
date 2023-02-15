@@ -18,6 +18,9 @@
 		67063F6C2999756C0043EA60 /* script.py in Resources */ = {isa = PBXBuildFile; fileRef = 67063F6B2999756C0043EA60 /* script.py */; };
 		67063F6E2999789A0043EA60 /* DataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67063F6D2999789A0043EA60 /* DataObject.swift */; };
 		67063F702999C42D0043EA60 /* script_tests.py in Resources */ = {isa = PBXBuildFile; fileRef = 67063F6F2999C42D0043EA60 /* script_tests.py */; };
+		67AA50A1299D9D4000D89CF5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67AA50A0299D9D4000D89CF5 /* SystemConfiguration.framework */; };
+		67C1F972299D9DD700296A30 /* python-stdlib in Resources */ = {isa = PBXBuildFile; fileRef = 67C1F970299D9DD600296A30 /* python-stdlib */; };
+		67C1F973299D9DD700296A30 /* Python.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67C1F971299D9DD700296A30 /* Python.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +55,9 @@
 		67063F6B2999756C0043EA60 /* script.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
 		67063F6D2999789A0043EA60 /* DataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataObject.swift; sourceTree = "<group>"; };
 		67063F6F2999C42D0043EA60 /* script_tests.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = script_tests.py; sourceTree = "<group>"; };
+		67AA50A0299D9D4000D89CF5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		67C1F970299D9DD600296A30 /* python-stdlib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "python-stdlib"; sourceTree = "<group>"; };
+		67C1F971299D9DD700296A30 /* Python.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Python.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +66,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				67063F6A299972B30043EA60 /* PythonKit in Frameworks */,
+				67C1F973299D9DD700296A30 /* Python.xcframework in Frameworks */,
+				67AA50A1299D9D4000D89CF5 /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +95,7 @@
 				67063F4E29996FAD0043EA60 /* Encrypted Password VaultTests */,
 				67063F5829996FAD0043EA60 /* Encrypted Password VaultUITests */,
 				67063F3B29996FAB0043EA60 /* Products */,
+				67AA509F299D9D3F00D89CF5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,6 +116,8 @@
 				67063F3F29996FAB0043EA60 /* ContentView.swift */,
 				67063F6D2999789A0043EA60 /* DataObject.swift */,
 				67063F6B2999756C0043EA60 /* script.py */,
+				67C1F970299D9DD600296A30 /* python-stdlib */,
+				67C1F971299D9DD700296A30 /* Python.xcframework */,
 				67063F6F2999C42D0043EA60 /* script_tests.py */,
 				67063F4129996FAC0043EA60 /* Assets.xcassets */,
 				67063F4629996FAC0043EA60 /* Encrypted_Password_Vault.entitlements */,
@@ -140,6 +151,14 @@
 			path = "Encrypted Password VaultUITests";
 			sourceTree = "<group>";
 		};
+		67AA509F299D9D3F00D89CF5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				67AA50A0299D9D4000D89CF5 /* SystemConfiguration.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -150,6 +169,7 @@
 				67063F3629996FAB0043EA60 /* Sources */,
 				67063F3729996FAB0043EA60 /* Frameworks */,
 				67063F3829996FAB0043EA60 /* Resources */,
+				67C1F974299DA0DC00296A30 /* Sign Python Binary Modules */,
 			);
 			buildRules = (
 			);
@@ -251,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				67063F4529996FAC0043EA60 /* Preview Assets.xcassets in Resources */,
+				67C1F972299D9DD700296A30 /* python-stdlib in Resources */,
 				67063F702999C42D0043EA60 /* script_tests.py in Resources */,
 				67063F6C2999756C0043EA60 /* script.py in Resources */,
 				67063F4229996FAC0043EA60 /* Assets.xcassets in Resources */,
@@ -272,6 +293,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		67C1F974299DA0DC00296A30 /* Sign Python Binary Modules */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Sign Python Binary Modules";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nset -e\necho \"Signing as $EXPANDED_CODE_SIGN_IDENTITY_NAME ($EXPANDED_CODE_SIGN_IDENTITY)\"\nfind \"$CODESIGNING_FOLDER_PATH/Contents/Resources/python-stdlib/lib-dynload\" -name \"*.so\" -exec /usr/bin/codesign --force --sign \"$EXPANDED_CODE_SIGN_IDENTITY\" -o runtime --timestamp=none --preserve-metadata=identifier,entitlements,flags --generate-entitlement-der {} \\;\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		67063F3629996FAB0043EA60 /* Sources */ = {
@@ -440,6 +482,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Encrypted Password Vault/Preview Content\"";
+				DEVELOPMENT_TEAM = HP27227XP7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -465,6 +508,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Encrypted Password Vault/Preview Content\"";
+				DEVELOPMENT_TEAM = HP27227XP7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
