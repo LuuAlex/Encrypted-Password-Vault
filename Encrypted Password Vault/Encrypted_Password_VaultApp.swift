@@ -34,7 +34,7 @@ func runCreateCSV(path: String, password: String) {
     
     let sys = Python.import("sys")
     sys.path.append("/Users/alexluu/Documents/GitHub/Encrypted Password Vault/Encrypted Password Vault")
-    let file = Python.import("script.py")
+    let file = Python.import("script")
     file.create_csv(path, password)
 }
 
@@ -43,7 +43,7 @@ func runRead(path: String, password: String) -> [DataObject] {
 
     let sys = Python.import("sys")
     sys.path.append("/Users/alexluu/Documents/GitHub/Encrypted Password Vault/Encrypted Password Vault")
-    let file = Python.import("script.py")
+    let file = Python.import("script")
     var data = String(file.read(path, password))!
     var dataArray: [DataObject] = []
     
