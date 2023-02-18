@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var showDataFolderLocation = true
+    @State private var showDataFolderLocation = true //!checkPathExists()
     @State private var showPasswordCheck = false
     @State private var showAuthScreen = false
     
@@ -17,7 +17,13 @@ struct ContentView: View {
         VStack {
             if showDataFolderLocation {
                 FileLocation(showDataFolderLocation: $showDataFolderLocation,
-                             showPasswordCheck: $showPasswordCheck)
+                             showPasswordCheck: $showPasswordCheck,
+                             showAuthScreen: $showAuthScreen)
+            }
+            if showPasswordCheck {
+                PasswordLockView(showDataFolderLocation: $showDataFolderLocation,
+                                 showPasswordCheck: $showPasswordCheck,
+                                 showAuthScreen: $showAuthScreen)
             }
             
             

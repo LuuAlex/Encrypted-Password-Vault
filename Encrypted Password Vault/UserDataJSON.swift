@@ -7,10 +7,64 @@
 
 import Foundation
 
+
 struct UserData: Codable {
-    var hashedPassword: String
     var path: String
+    var hashedPassword: String
 }
+
+func initalize() {
+    encodeJSON(userData: UserData(path: "", hashedPassword: ""))
+}
+
+
+func checkPathExists() -> Bool {
+    if getPath() != nil {
+        return true
+    }
+    return false
+}
+
+func checkPasswordExists() -> Bool {
+    if getPassword() != nil {
+        return true
+    }
+    return false
+}
+
+
+func checkHashedPassword(password: String) -> Bool {
+    let userData = getPassword()
+    if userData != nil {
+        return userData == password
+    }
+    return false
+}
+
+func getPath() -> String? {
+    let userData = decodeJSON()
+    if userData != nil {
+        return userData?.path
+    }
+    return nil
+}
+
+func getPassword() -> String? {
+    let userData = decodeJSON()
+    if userData != nil {
+        return userData?.hashedPassword
+    }
+    return nil
+}
+
+func setPath(path: String) {
+    encodeJSON(userData: UserData(path: path, hashedPassword: getPassword() ?? ""))
+}
+
+func setPassword(password: String) {
+    encodeJSON(userData: UserData(path: getPath() ?? "", hashedPassword: password))
+}
+
 
 func decodeJSON() -> UserData? {
     do {
@@ -26,7 +80,7 @@ func decodeJSON() -> UserData? {
     return nil
 }
 
-func writeJSON(userData: UserData) {
+func encodeJSON(userData: UserData) {
     let encoder = JSONEncoder()
     do {
         let fileURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent("userData.json")
@@ -35,20 +89,4 @@ func writeJSON(userData: UserData) {
     } catch {
         print("Error in encoding JSON")
     }
-}
-
-func getPath() -> String? {
-    let userData = decodeJSON()
-    if userData != nil {
-        return userData?.path
-    }
-    return nil
-}
-
-func checkHashedPassword(password: String) -> Bool {
-    let userData = decodeJSON()
-    if userData != nil {
-        return userData?.hashedPassword == password
-    }
-    return false
 }

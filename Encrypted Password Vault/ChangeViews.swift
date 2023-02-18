@@ -8,18 +8,50 @@
 import Foundation
 import SwiftUI
 
-struct FileLocation: View {
-    
-    @State var placeholder = "Select Folder"
-    @State var filename = "<none>"
-    @State var showFileChooser = true
+struct NextButton: View {
     
     @Binding var showDataFolderLocation: Bool
     @Binding var showPasswordCheck: Bool
+    @Binding var showAuthScreen: Bool
+    
+    @State var hide: Bool
+    @State var passwordScreen: Bool
+    @State var password: String
+    
+    var body: some View {
+        Button ("Next") {
+            if passwordScreen {
+                if checkHashedPassword(password: password) || !checkPasswordExists() {
+                    showPasswordCheck.toggle()
+                    showAuthScreen = true
+                    setPassword(password: password)
+                }
+            } else {
+                showDataFolderLocation.toggle()
+                showPasswordCheck = true
+            }
+        }
+        .buttonStyle(.borderedProminent)
+        //.foregroundColor(.white)
+        //.background(.blue)
+        //.cornerRadius(6)
+        .disabled(hide)
+    }
+    
+}
+
+struct FileLocation: View {
+    
+    @Binding var showDataFolderLocation: Bool
+    @Binding var showPasswordCheck: Bool
+    @Binding var showAuthScreen: Bool
+    
+    @State private var placeholder = "Select Folder"
+    @State private var filename = ""
 
     var body: some View {
         VStack {
-
+            
             HStack {
                 Text("Password Data Folder Location: ")
                 Button(placeholder) {
@@ -28,48 +60,50 @@ struct FileLocation: View {
                     panel.canChooseDirectories = true
                     panel.canChooseFiles = false
                     if panel.runModal() == .OK {
-                        self.placeholder = panel.url?.lastPathComponent ?? "<none>"
-                        self.filename = panel.url?.path ?? "<none>"
+                        self.placeholder = panel.url?.lastPathComponent ?? "Select Folder"
+                        self.filename = panel.url?.path ?? ""
+                        setPath(path: self.filename)
                     }
                 }
             }
 
-            Button {
-                showDataFolderLocation.toggle()
-                showPasswordCheck = true
-            } label: {
-                Text("Next")
-                   .foregroundColor(.white)
-            }
-            .background(.blue)
-            .cornerRadius(8)
-            .disabled(filename == "<none>")
+            NextButton(showDataFolderLocation: $showDataFolderLocation,
+                       showPasswordCheck: $showPasswordCheck,
+                       showAuthScreen: $showAuthScreen,
+                       hide: filename.isEmpty,
+                       passwordScreen: false,
+                       password: "")
                 
         }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
 }
 
 struct PasswordLockView: View {
     
-    @State private var path = "/Users/alexluu/Downloads"
-    @State private var password = "123"
+    @Binding var showDataFolderLocation: Bool
+    @Binding var showPasswordCheck: Bool
+    @Binding var showAuthScreen: Bool
+    
+    @State private var password = ""
     
     var body: some View {
         VStack {
             HStack {
                 Text("Enter your password: ")
-                TextField("/Users/alexluu/Downloads", text: $path)
+                TextField("", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                TextField("123", text: $password)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                let _ = print(runCreateCSV(path: path, password: password))
-                let _ = print(runWrite(path: path, password: password, newDataEntry: ["ufe","xsf","12"]))
-                Text(String(runRead(path: path, password: password)[0].getPass()))
-                
             }
+            
+            NextButton(showDataFolderLocation: $showDataFolderLocation,
+                       showPasswordCheck: $showPasswordCheck,
+                       showAuthScreen: $showAuthScreen,
+                       hide: password.isEmpty,
+                       passwordScreen: true,
+                       password: password)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
 }
