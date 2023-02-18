@@ -9,6 +9,8 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 def initialize(path):
     path = path + "/EncryptedPasswordVault_UserData"
+    if not os.path.exists(path):
+        os.makedirs(path)
     return path + "/passwordData.csv", path + "/salt.txt"
 
 # Password Tool - convertPassword to key

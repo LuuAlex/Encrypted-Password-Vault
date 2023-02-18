@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var path = ""
-    @State private var password = ""
+    @State private var path = "/Users/alexluu/Downloads"
+    @State private var password = "123"
     
     var body: some View {
         VStack {
@@ -18,14 +18,12 @@ struct ContentView: View {
                 .foregroundColor(.accentColor)
             Text("Hello, world!")
             
-            TextField("", text: $path) {
-                
-            }
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-            TextField("", text: $password) {
-                
-            }
-            .textFieldStyle(RoundedBorderTextFieldStyle())
+            TextField("/Users/alexluu/Downloads", text: $path)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            TextField("123", text: $password)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            let _ = print(runCreateCSV(path: path, password: password))
+            let _ = print(runWrite(path: path, password: password, newDataEntry: ["ufe","xsf","12"]))
             Text(String(runRead(path: path, password: password)[0].getPass()))
         }
         .padding()
