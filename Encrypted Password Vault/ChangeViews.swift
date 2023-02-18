@@ -8,12 +8,14 @@
 import Foundation
 import SwiftUI
 
+
 struct NextButton: View {
     
     @Binding var showDataFolderLocation: Bool
     @Binding var showPasswordCheck: Bool
     @Binding var showAuthScreen: Bool
     
+    @State var path = getPath()
     @State var hide: Bool
     @State var passwordScreen: Bool
     @State var password: String
@@ -21,10 +23,14 @@ struct NextButton: View {
     var body: some View {
         Button ("Next") {
             if passwordScreen {
-                if checkHashedPassword(password: password) || !checkPasswordExists() {
+                if checkHashedPassword(password: password) {
+                    showPasswordCheck.toggle()
+                    showAuthScreen = true
+                } else if !checkPasswordExists() {
                     showPasswordCheck.toggle()
                     showAuthScreen = true
                     setPassword(password: password)
+                    runCreateCSV(path: path ?? "~/Downloads", password: password)
                 }
             } else {
                 showDataFolderLocation.toggle()
@@ -33,12 +39,13 @@ struct NextButton: View {
         }
         .buttonStyle(.borderedProminent)
         //.foregroundColor(.white)
-        //.background(.blue)
+        .tint(.blue)
         //.cornerRadius(6)
-        .disabled(hide)
+        //.disabled(hide)
     }
     
 }
+
 
 struct FileLocation: View {
     
@@ -53,6 +60,7 @@ struct FileLocation: View {
         VStack {
             
             HStack {
+                let _ = print(initalize())
                 Text("Password Data Folder Location: ")
                 Button(placeholder) {
                     let panel = NSOpenPanel()
@@ -62,7 +70,8 @@ struct FileLocation: View {
                     if panel.runModal() == .OK {
                         self.placeholder = panel.url?.lastPathComponent ?? "Select Folder"
                         self.filename = panel.url?.path ?? ""
-                        setPath(path: self.filename)
+                        setPath(path: self.filename) // TODO
+                        panel.close()
                     }
                 }
             }
@@ -79,6 +88,7 @@ struct FileLocation: View {
     }
     
 }
+
 
 struct PasswordLockView: View {
     
@@ -102,6 +112,41 @@ struct PasswordLockView: View {
                        hide: password.isEmpty,
                        passwordScreen: true,
                        password: password)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+}
+
+
+struct AuthView: View {
+    
+    @Binding var showDataFolderLocation: Bool
+    @Binding var showPasswordCheck: Bool
+    @Binding var showAuthScreen: Bool
+    
+    @State var password = getPassword()
+    @State var path = getPath()
+    
+    var body: some View {
+        VStack {
+            var data = runRead(path: path ?? "~/Downloads", password: password ?? "")
+            Grid() {
+                ForEach((0...data.count), id: \.self) { i in
+                    GridRow {
+                        Text(data[i].getKey())
+                        Text(data[i].getUser())
+                        Text(data[i].getPass())
+                    }
+                }
+            }
+            
+            NextButton(showDataFolderLocation: $showDataFolderLocation,
+                       showPasswordCheck: $showPasswordCheck,
+                       showAuthScreen: $showAuthScreen,
+                       hide: false,
+                       passwordScreen: false,
+                       password: password ?? "")
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

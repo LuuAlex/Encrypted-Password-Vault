@@ -23,6 +23,7 @@ func runCreateCSV(path: String, password: String) {
     let sys = Python.import("sys")
     sys.path.append("/Users/alexluu/Developer/Personal/Encrypted Password Vault/Encrypted Password Vault")
     let file = Python.import("script")
+    print(path, password)
     file.create_csv(path, password)
 }
 
@@ -32,7 +33,8 @@ func runRead(path: String, password: String) -> [DataObject] {
     let sys = Python.import("sys")
     sys.path.append("/Users/alexluu/Developer/Personal/Encrypted Password Vault/Encrypted Password Vault")
     let file = Python.import("script")
-    var data = String(file.read(path, password))!
+    print(path, password)
+    var data = String(file.read(path, password)) ?? ""
     var dataArray: [DataObject] = []
     
     var dataItems: [String] = data.components(separatedBy: "\\r\\s")

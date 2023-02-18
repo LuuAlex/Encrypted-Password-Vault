@@ -119,13 +119,13 @@
 			isa = PBXGroup;
 			children = (
 				6770957329A07604009D566B /* PythonFunctions.swift */,
-				67063F3D29996FAB0043EA60 /* Encrypted_Password_VaultApp.swift */,
 				6770957529A07680009D566B /* ChangeViews.swift */,
 				6770957729A0845D009D566B /* UserDataJSON.swift */,
+				67063F6D2999789A0043EA60 /* DataObject.swift */,
 				67C1F975299DBC3800296A30 /* script_tests.py */,
 				67C1F976299DBC3800296A30 /* script.py */,
+				67063F3D29996FAB0043EA60 /* Encrypted_Password_VaultApp.swift */,
 				67063F3F29996FAB0043EA60 /* ContentView.swift */,
-				67063F6D2999789A0043EA60 /* DataObject.swift */,
 				67C1F970299D9DD600296A30 /* python-stdlib */,
 				67C1F971299D9DD700296A30 /* Python.xcframework */,
 				67063F4129996FAC0043EA60 /* Assets.xcassets */,

@@ -19,14 +19,14 @@ func initalize() {
 
 
 func checkPathExists() -> Bool {
-    if getPath() != nil {
+    if !((getPath() ?? "").isEmpty) {
         return true
     }
     return false
 }
 
 func checkPasswordExists() -> Bool {
-    if getPassword() != nil {
+    if !((getPassword() ?? "").isEmpty) {
         return true
     }
     return false
@@ -85,6 +85,7 @@ func encodeJSON(userData: UserData) {
     do {
         let fileURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent("userData.json")
         let data = try encoder.encode(userData)
+        print("path set", data) // TODO
         try data.write(to: fileURL, options: .atomic)
     } catch {
         print("Error in encoding JSON")

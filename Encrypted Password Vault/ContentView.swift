@@ -25,6 +25,11 @@ struct ContentView: View {
                                  showPasswordCheck: $showPasswordCheck,
                                  showAuthScreen: $showAuthScreen)
             }
+            if showAuthScreen {
+                AuthView(showDataFolderLocation: $showDataFolderLocation,
+                         showPasswordCheck: $showPasswordCheck,
+                         showAuthScreen: $showAuthScreen)
+            }
             
             
         }
