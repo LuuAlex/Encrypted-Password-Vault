@@ -26,12 +26,11 @@ struct PathViews: View {
                     panel.allowsMultipleSelection = false
                     panel.canChooseDirectories = true
                     panel.canChooseFiles = false
-                    if panel.runModal() == .OK {
+                    if panel.runModal() == NSApplication.ModalResponse.OK {
                         self.placeholder = panel.url?.lastPathComponent ?? "Select Folder"
                         self.filename = panel.url?.path ?? ""
-                        panel.close()
+                        setPath(path: self.filename) // TODO
                     }
-                    setPath(path: self.filename) // TODO
                 }
             }
 
