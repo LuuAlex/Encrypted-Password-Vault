@@ -16,17 +16,17 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if showDataFolderLocation {
-                FileLocation(showDataFolderLocation: $showDataFolderLocation,
+                PathViews(showDataFolderLocation: $showDataFolderLocation,
                              showPasswordCheck: $showPasswordCheck,
                              showAuthScreen: $showAuthScreen)
             }
             if showPasswordCheck {
-                PasswordLockView(showDataFolderLocation: $showDataFolderLocation,
+                PasswordViews(showDataFolderLocation: $showDataFolderLocation,
                                  showPasswordCheck: $showPasswordCheck,
                                  showAuthScreen: $showAuthScreen)
             }
             if showAuthScreen {
-                AuthView(showDataFolderLocation: $showDataFolderLocation,
+                DataViews(showDataFolderLocation: $showDataFolderLocation,
                          showPasswordCheck: $showPasswordCheck,
                          showAuthScreen: $showAuthScreen)
             }

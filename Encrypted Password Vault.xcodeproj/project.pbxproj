@@ -16,14 +16,17 @@
 		67063F5C29996FAD0043EA60 /* Encrypted_Password_VaultUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67063F5B29996FAD0043EA60 /* Encrypted_Password_VaultUITestsLaunchTests.swift */; };
 		67063F6A299972B30043EA60 /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 67063F69299972B30043EA60 /* PythonKit */; };
 		67063F6E2999789A0043EA60 /* DataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67063F6D2999789A0043EA60 /* DataObject.swift */; };
+		6722CD3629A6D12F00B9B79C /* PasswordViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6722CD3529A6D12F00B9B79C /* PasswordViews.swift */; };
+		6722CD3829A6D14300B9B79C /* PathViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6722CD3729A6D14300B9B79C /* PathViews.swift */; };
+		6722CD3A29A6D14D00B9B79C /* DataViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6722CD3929A6D14D00B9B79C /* DataViews.swift */; };
+		6722CD3E29A6D1E200B9B79C /* ViewsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6722CD3D29A6D1E200B9B79C /* ViewsUtils.swift */; };
+		6722CD4129A6D78800B9B79C /* script_tests.py in Resources */ = {isa = PBXBuildFile; fileRef = 6722CD3F29A6D78800B9B79C /* script_tests.py */; };
+		6722CD4229A6D78900B9B79C /* script.py in Resources */ = {isa = PBXBuildFile; fileRef = 6722CD4029A6D78800B9B79C /* script.py */; };
 		6770957429A07604009D566B /* PythonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6770957329A07604009D566B /* PythonFunctions.swift */; };
-		6770957629A07680009D566B /* ChangeViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6770957529A07680009D566B /* ChangeViews.swift */; };
 		6770957829A0845D009D566B /* UserDataJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6770957729A0845D009D566B /* UserDataJSON.swift */; };
 		67AA50A1299D9D4000D89CF5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67AA50A0299D9D4000D89CF5 /* SystemConfiguration.framework */; };
 		67C1F972299D9DD700296A30 /* python-stdlib in Resources */ = {isa = PBXBuildFile; fileRef = 67C1F970299D9DD600296A30 /* python-stdlib */; };
 		67C1F973299D9DD700296A30 /* Python.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67C1F971299D9DD700296A30 /* Python.xcframework */; };
-		67C1F977299DBC3800296A30 /* script_tests.py in Resources */ = {isa = PBXBuildFile; fileRef = 67C1F975299DBC3800296A30 /* script_tests.py */; };
-		67C1F978299DBC3800296A30 /* script.py in Resources */ = {isa = PBXBuildFile; fileRef = 67C1F976299DBC3800296A30 /* script.py */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,14 +59,17 @@
 		67063F5929996FAD0043EA60 /* Encrypted_Password_VaultUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encrypted_Password_VaultUITests.swift; sourceTree = "<group>"; };
 		67063F5B29996FAD0043EA60 /* Encrypted_Password_VaultUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encrypted_Password_VaultUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		67063F6D2999789A0043EA60 /* DataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataObject.swift; sourceTree = "<group>"; };
+		6722CD3529A6D12F00B9B79C /* PasswordViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViews.swift; sourceTree = "<group>"; };
+		6722CD3729A6D14300B9B79C /* PathViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathViews.swift; sourceTree = "<group>"; };
+		6722CD3929A6D14D00B9B79C /* DataViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViews.swift; sourceTree = "<group>"; };
+		6722CD3D29A6D1E200B9B79C /* ViewsUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewsUtils.swift; sourceTree = "<group>"; };
+		6722CD3F29A6D78800B9B79C /* script_tests.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = script_tests.py; path = "python-stdlib/lib-dynload/script_tests.py"; sourceTree = "<group>"; };
+		6722CD4029A6D78800B9B79C /* script.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = script.py; path = "python-stdlib/lib-dynload/script.py"; sourceTree = "<group>"; };
 		6770957329A07604009D566B /* PythonFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PythonFunctions.swift; sourceTree = "<group>"; };
-		6770957529A07680009D566B /* ChangeViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeViews.swift; sourceTree = "<group>"; };
 		6770957729A0845D009D566B /* UserDataJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataJSON.swift; sourceTree = "<group>"; };
 		67AA50A0299D9D4000D89CF5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		67C1F970299D9DD600296A30 /* python-stdlib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "python-stdlib"; sourceTree = "<group>"; };
 		67C1F971299D9DD700296A30 /* Python.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Python.xcframework; sourceTree = "<group>"; };
-		67C1F975299DBC3800296A30 /* script_tests.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = script_tests.py; path = "python-stdlib/lib-dynload/script_tests.py"; sourceTree = "<group>"; };
-		67C1F976299DBC3800296A30 /* script.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = script.py; path = "python-stdlib/lib-dynload/script.py"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,14 +124,17 @@
 		67063F3C29996FAB0043EA60 /* Encrypted Password Vault */ = {
 			isa = PBXGroup;
 			children = (
-				6770957329A07604009D566B /* PythonFunctions.swift */,
-				6770957529A07680009D566B /* ChangeViews.swift */,
-				6770957729A0845D009D566B /* UserDataJSON.swift */,
-				67063F6D2999789A0043EA60 /* DataObject.swift */,
-				67C1F975299DBC3800296A30 /* script_tests.py */,
-				67C1F976299DBC3800296A30 /* script.py */,
 				67063F3D29996FAB0043EA60 /* Encrypted_Password_VaultApp.swift */,
 				67063F3F29996FAB0043EA60 /* ContentView.swift */,
+				6722CD3D29A6D1E200B9B79C /* ViewsUtils.swift */,
+				6722CD3729A6D14300B9B79C /* PathViews.swift */,
+				6722CD3529A6D12F00B9B79C /* PasswordViews.swift */,
+				6722CD3929A6D14D00B9B79C /* DataViews.swift */,
+				6722CD3F29A6D78800B9B79C /* script_tests.py */,
+				6722CD4029A6D78800B9B79C /* script.py */,
+				67063F6D2999789A0043EA60 /* DataObject.swift */,
+				6770957329A07604009D566B /* PythonFunctions.swift */,
+				6770957729A0845D009D566B /* UserDataJSON.swift */,
 				67C1F970299D9DD600296A30 /* python-stdlib */,
 				67C1F971299D9DD700296A30 /* Python.xcframework */,
 				67063F4129996FAC0043EA60 /* Assets.xcassets */,
@@ -280,10 +289,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				67063F4529996FAC0043EA60 /* Preview Assets.xcassets in Resources */,
-				67C1F977299DBC3800296A30 /* script_tests.py in Resources */,
+				6722CD4129A6D78800B9B79C /* script_tests.py in Resources */,
 				67C1F972299D9DD700296A30 /* python-stdlib in Resources */,
 				67063F4229996FAC0043EA60 /* Assets.xcassets in Resources */,
-				67C1F978299DBC3800296A30 /* script.py in Resources */,
+				6722CD4229A6D78900B9B79C /* script.py in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,10 +340,13 @@
 			files = (
 				6770957829A0845D009D566B /* UserDataJSON.swift in Sources */,
 				67063F6E2999789A0043EA60 /* DataObject.swift in Sources */,
+				6722CD3629A6D12F00B9B79C /* PasswordViews.swift in Sources */,
 				67063F4029996FAB0043EA60 /* ContentView.swift in Sources */,
 				67063F3E29996FAB0043EA60 /* Encrypted_Password_VaultApp.swift in Sources */,
+				6722CD3829A6D14300B9B79C /* PathViews.swift in Sources */,
+				6722CD3E29A6D1E200B9B79C /* ViewsUtils.swift in Sources */,
 				6770957429A07604009D566B /* PythonFunctions.swift in Sources */,
-				6770957629A07680009D566B /* ChangeViews.swift in Sources */,
+				6722CD3A29A6D14D00B9B79C /* DataViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
