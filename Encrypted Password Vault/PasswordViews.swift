@@ -16,6 +16,7 @@ struct PasswordViews: View {
     
     var body: some View {
         VStack {
+            
             HStack {
                 Text("Enter your password: ")
                 TextField("", text: $password)
@@ -26,8 +27,8 @@ struct PasswordViews: View {
                        showPasswordViews: $showPasswordViews,
                        showDataViews: $showDataViews,
                        hide: password.isEmpty,
-                       passwordScreen: true,
                        password: password)
+            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

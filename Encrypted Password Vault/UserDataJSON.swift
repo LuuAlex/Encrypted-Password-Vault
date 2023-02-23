@@ -35,7 +35,7 @@ func checkPasswordExists() -> Bool {
 
 func checkHashedPassword(password: String) -> Bool {
     let userData = getPassword()
-    if userData != nil {
+    if userData != nil && password != "" {
         return userData == password
     }
     return false
@@ -70,7 +70,6 @@ func decodeJSON() -> UserData? {
     do {
         let fileURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent("userData.json")
         let data = try Data(contentsOf: fileURL, options: .alwaysMapped)
-        
         let decoder = JSONDecoder()
         let dataDecoded = try decoder.decode(UserData.self, from: data)
         return dataDecoded
@@ -85,7 +84,6 @@ func encodeJSON(userData: UserData) {
     do {
         let fileURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent("userData.json")
         let data = try encoder.encode(userData)
-        print("path set", data) // TODO
         try data.write(to: fileURL, options: .atomic)
     } catch {
         print("Error in encoding JSON")

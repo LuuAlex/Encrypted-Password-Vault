@@ -17,7 +17,8 @@ struct DataViews: View {
     
     var body: some View {
         VStack {
-            var data = runRead(path: path ?? "~/Downloads", password: password ?? "")
+            
+            let data = runRead(path: path ?? "~/Downloads", password: password ?? "")
             Grid() {
                 ForEach((0...data.count), id: \.self) { i in
                     GridRow {
@@ -28,12 +29,6 @@ struct DataViews: View {
                 }
             }
             
-            NextButton(showPathViews: $showPathViews,
-                       showPasswordViews: $showPasswordViews,
-                       showDataViews: $showDataViews,
-                       hide: false,
-                       passwordScreen: false,
-                       password: password ?? "")
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

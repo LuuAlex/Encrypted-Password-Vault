@@ -19,14 +19,13 @@ struct PathViews: View {
         VStack {
             
             HStack {
-                let _ = print(initalize())
                 Text("Password Data Folder Location: ")
                 Button(placeholder) {
                     let panel = NSOpenPanel()
                     panel.allowsMultipleSelection = false
                     panel.canChooseDirectories = true
                     panel.canChooseFiles = false
-                    if panel.runModal() == NSApplication.ModalResponse.OK {
+                    if panel.runModal() == NSApplication.ModalResponse.OK  {
                         self.placeholder = panel.url?.lastPathComponent ?? "Select Folder"
                         self.filename = panel.url?.path ?? ""
                         setPath(path: self.filename) // TODO
@@ -38,7 +37,6 @@ struct PathViews: View {
                        showPasswordViews: $showPasswordViews,
                        showDataViews: $showDataViews,
                        hide: filename.isEmpty,
-                       passwordScreen: false,
                        password: "")
                 
         }
