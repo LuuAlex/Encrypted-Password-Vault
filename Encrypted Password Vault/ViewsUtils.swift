@@ -17,9 +17,9 @@ struct TestValues {
 
 struct NextButton: View {
     
-    @Binding var showDataFolderLocation: Bool
-    @Binding var showPasswordCheck: Bool
-    @Binding var showAuthScreen: Bool
+    @Binding var showPathViews: Bool
+    @Binding var showPasswordViews: Bool
+    @Binding var showDataViews: Bool
     
     @State var path = getPath()
     @State var hide: Bool
@@ -30,17 +30,17 @@ struct NextButton: View {
         Button ("Next") {
             if passwordScreen {
                 if checkHashedPassword(password: password) {
-                    showPasswordCheck.toggle()
-                    showAuthScreen = true
+                    showPasswordViews.toggle()
+                    showDataViews = true
                 } else if !checkPasswordExists() {
-                    showPasswordCheck.toggle()
-                    showAuthScreen = true
+                    showPasswordViews.toggle()
+                    showDataViews = true
                     setPassword(password: password)
                     runCreateCSV(path: path ?? "~/Downloads", password: password)
                 }
             } else {
-                showDataFolderLocation.toggle()
-                showPasswordCheck = true
+                showPathViews.toggle()
+                showPasswordViews = true
             }
         }
         .buttonStyle(.borderedProminent)

@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct DataViews: View {
-    @Binding var showDataFolderLocation: Bool
-    @Binding var showPasswordCheck: Bool
-    @Binding var showAuthScreen: Bool
+    @Binding var showPathViews: Bool
+    @Binding var showPasswordViews: Bool
+    @Binding var showDataViews: Bool
     
     @State var password = getPassword()
     @State var path = getPath()
@@ -28,9 +28,9 @@ struct DataViews: View {
                 }
             }
             
-            NextButton(showDataFolderLocation: $showDataFolderLocation,
-                       showPasswordCheck: $showPasswordCheck,
-                       showAuthScreen: $showAuthScreen,
+            NextButton(showPathViews: $showPathViews,
+                       showPasswordViews: $showPasswordViews,
+                       showDataViews: $showDataViews,
                        hide: false,
                        passwordScreen: false,
                        password: password ?? "")
@@ -41,6 +41,6 @@ struct DataViews: View {
 
 struct DataViews_Previews: PreviewProvider {
     static var previews: some View {
-        DataViews(showDataFolderLocation: TestValues.$testFalse, showPasswordCheck: TestValues.$testFalse, showAuthScreen: TestValues.$testTrue)
+        DataViews(showPathViews: TestValues.$testFalse, showPasswordViews: TestValues.$testFalse, showDataViews: TestValues.$testTrue)
     }
 }

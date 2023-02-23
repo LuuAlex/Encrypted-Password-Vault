@@ -9,26 +9,26 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var showDataFolderLocation = true //!checkPathExists()
-    @State private var showPasswordCheck = false
-    @State private var showAuthScreen = false
+    @State private var showPathViews = true //!checkPathExists()
+    @State private var showPasswordViews = false
+    @State private var showDataViews = false
     
     var body: some View {
         VStack {
-            if showDataFolderLocation {
-                PathViews(showDataFolderLocation: $showDataFolderLocation,
-                             showPasswordCheck: $showPasswordCheck,
-                             showAuthScreen: $showAuthScreen)
+            if showPathViews {
+                PathViews(showPathViews: $showPathViews,
+                             showPasswordViews: $showPasswordViews,
+                             showDataViews: $showDataViews)
             }
-            if showPasswordCheck {
-                PasswordViews(showDataFolderLocation: $showDataFolderLocation,
-                                 showPasswordCheck: $showPasswordCheck,
-                                 showAuthScreen: $showAuthScreen)
+            if showPasswordViews {
+                PasswordViews(showPathViews: $showPathViews,
+                                 showPasswordViews: $showPasswordViews,
+                                 showDataViews: $showDataViews)
             }
-            if showAuthScreen {
-                DataViews(showDataFolderLocation: $showDataFolderLocation,
-                         showPasswordCheck: $showPasswordCheck,
-                         showAuthScreen: $showAuthScreen)
+            if showDataViews {
+                DataViews(showPathViews: $showPathViews,
+                         showPasswordViews: $showPasswordViews,
+                         showDataViews: $showDataViews)
             }
             
             

@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct PathViews: View {
-    @Binding var showDataFolderLocation: Bool
-    @Binding var showPasswordCheck: Bool
-    @Binding var showAuthScreen: Bool
+    @Binding var showPathViews: Bool
+    @Binding var showPasswordViews: Bool
+    @Binding var showDataViews: Bool
     
     @State var placeholder = "Select Folder"
     @State var filename = ""
@@ -34,9 +34,9 @@ struct PathViews: View {
                 }
             }
 
-            NextButton(showDataFolderLocation: $showDataFolderLocation,
-                       showPasswordCheck: $showPasswordCheck,
-                       showAuthScreen: $showAuthScreen,
+            NextButton(showPathViews: $showPathViews,
+                       showPasswordViews: $showPasswordViews,
+                       showDataViews: $showDataViews,
                        hide: filename.isEmpty,
                        passwordScreen: false,
                        password: "")
@@ -48,6 +48,6 @@ struct PathViews: View {
 
 struct PathViews_Previews: PreviewProvider {
     static var previews: some View {
-        PathViews(showDataFolderLocation: TestValues.$testTrue, showPasswordCheck: TestValues.$testFalse, showAuthScreen: TestValues.$testFalse)
+        PathViews(showPathViews: TestValues.$testTrue, showPasswordViews: TestValues.$testFalse, showDataViews: TestValues.$testFalse)
     }
 }

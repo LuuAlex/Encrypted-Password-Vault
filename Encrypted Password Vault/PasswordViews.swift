@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct PasswordViews: View {
-    @Binding var showDataFolderLocation: Bool
-    @Binding var showPasswordCheck: Bool
-    @Binding var showAuthScreen: Bool
+    @Binding var showPathViews: Bool
+    @Binding var showPasswordViews: Bool
+    @Binding var showDataViews: Bool
     
     @State private var password = ""
     
@@ -22,9 +22,9 @@ struct PasswordViews: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
             }
             
-            NextButton(showDataFolderLocation: $showDataFolderLocation,
-                       showPasswordCheck: $showPasswordCheck,
-                       showAuthScreen: $showAuthScreen,
+            NextButton(showPathViews: $showPathViews,
+                       showPasswordViews: $showPasswordViews,
+                       showDataViews: $showDataViews,
                        hide: password.isEmpty,
                        passwordScreen: true,
                        password: password)
@@ -35,6 +35,6 @@ struct PasswordViews: View {
 
 struct PasswordViews_Previews: PreviewProvider {
     static var previews: some View {
-        PasswordViews(showDataFolderLocation: TestValues.$testFalse, showPasswordCheck: TestValues.$testTrue, showAuthScreen: TestValues.$testFalse)
+        PasswordViews(showPathViews: TestValues.$testFalse, showPasswordViews: TestValues.$testTrue, showDataViews: TestValues.$testFalse)
     }
 }
