@@ -23,19 +23,23 @@ struct NextButton: View {
     
     @State var path = getPath()
     @State var hide: Bool
-    @State var password: String
+    @Binding var password: String
     
     var body: some View {
         Button ("Next") {
             if showPasswordViews {
                 if checkHashedPassword(password: password) {
-
+                    showPasswordViews.toggle()
+                    showDataViews = true
                 } else if !checkPasswordExists() {
                     setPassword(password: password)
                     runCreateCSV(path: path ?? "~/Downloads", password: password)
+                    
+                    showPasswordViews.toggle()
+                    showDataViews = true
+                } else {
+                    // Invalid Password
                 }
-                showPasswordViews.toggle()
-                showDataViews = true
             } else {
                 showPathViews.toggle()
                 showPasswordViews = true

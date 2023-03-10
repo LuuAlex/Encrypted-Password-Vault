@@ -17,6 +17,7 @@ struct DataViews: View {
     
     var body: some View {
         VStack {
+            Text("Data Location: " + (getPath() ?? "~/Documents"))
             
             let data = runRead(path: path ?? "~/Downloads", password: password ?? "")
             Grid() {

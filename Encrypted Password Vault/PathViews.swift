@@ -37,7 +37,7 @@ struct PathViews: View {
                        showPasswordViews: $showPasswordViews,
                        showDataViews: $showDataViews,
                        hide: filename.isEmpty,
-                       password: "")
+                       password: $filename)
                 
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

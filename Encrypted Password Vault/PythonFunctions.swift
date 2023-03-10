@@ -32,7 +32,9 @@ func runRead(path: String, password: String) -> [DataObject] {
     let sys = Python.import("sys")
     sys.path.append("/Users/alexluu/Developer/Personal/Encrypted Password Vault/Encrypted Password Vault")
     let file = Python.import("script")
-    let data = String(file.read(path, password)) ?? "" // TODO: file is not reading correctly
+    let data = String(file.read(path, password)) ?? "xxx" // TODO: file is not reading correctly
+    print(path)
+    print(password)
     print(data)
     var dataArray: [DataObject] = []
     

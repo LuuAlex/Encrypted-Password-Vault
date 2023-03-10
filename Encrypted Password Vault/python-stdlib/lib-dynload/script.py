@@ -84,7 +84,7 @@ def decrypt(path, password):
     except:
         print("Failed to decrypt")
         return None
-
+    raise Exception(encrypted.decode() + "", "xxx: " + decrypted.decode()) # TODO: remove
     return decrypted.decode()
 
 def encrypt(path, password, dataString):
@@ -101,21 +101,7 @@ def encrypt(path, password, dataString):
 
 
 def read(path, password):
-    # Get Key and Paths
-    passwordDataPath, saltPath = initialize(path)
-    f, salt = getFernet(path, password)
-        
-    # Decrypt File
-    enc_file = open(passwordDataPath, 'rb')
-    encrypted = enc_file.read()
-    enc_file.close()
-    try:
-        decrypted = f.decrypt(encrypted)
-    except:
-        print("Failed to decrypt")
-        return None
-
-    return decrypted.decode()
+    return decrypt(path, password)
 
 # write new password entry; newDataEntry = [KEY, USER, PASS]
 def write(path, password, newDataEntry):

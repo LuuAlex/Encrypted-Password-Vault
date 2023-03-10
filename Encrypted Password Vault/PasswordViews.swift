@@ -16,6 +16,7 @@ struct PasswordViews: View {
     
     var body: some View {
         VStack {
+            Text("Data Location: " + (getPath() ?? ""))
             
             HStack {
                 Text("Enter your password: ")
@@ -27,7 +28,7 @@ struct PasswordViews: View {
                        showPasswordViews: $showPasswordViews,
                        showDataViews: $showDataViews,
                        hide: password.isEmpty,
-                       password: password)
+                       password: $password)
             
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
