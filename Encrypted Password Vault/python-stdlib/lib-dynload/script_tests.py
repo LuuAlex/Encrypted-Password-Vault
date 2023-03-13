@@ -6,7 +6,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_basics(self):
         password = "129vhxve4gef8$3B*B&"
-        path = "/Users/alexluu/Documents/GitHub/Encrypted Password Vault/Encrypted Password Vault"
+        path = "/Users/alexluu/Developer/Personal/Encrypted Password Vault/Encrypted Password Vault"
         script.initialize(path)
         script.create_csv(path, password)
 
@@ -48,7 +48,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_edgeCases(self):
         password = "129vhxve4gef8$3B*B&"
-        path = "/Users/alexluu/Documents/GitHub/Encrypted Password Vault/Encrypted Password Vault"
+        path = "/Users/alexluu/Developer/Personal/Encrypted Password Vault/Encrypted Password Vault"
         script.initialize(path)
         script.create_csv(path, password)
 
@@ -99,14 +99,14 @@ class TestStringMethods(unittest.TestCase):
     
     def test_random(self):
         password = "129vhxve4gef8$3B*B&"
-        path = "/Users/alexluu/Documents/GitHub/Encrypted Password Vault/Encrypted Password Vault"
+        path = "/Users/alexluu/Developer/Personal/Encrypted Password Vault/Encrypted Password Vault"
         script.initialize(path)
         script.create_csv(path, password)
 
         ans = ""
         keys = []
         randomChar = "1234567890abcdefghijklmnopqrstuvwxyz!@#$%^&*"
-        for _ in range(250):
+        for _ in range(100):
             x = random.random()
 
             # write

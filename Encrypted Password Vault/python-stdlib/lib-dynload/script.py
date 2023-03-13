@@ -84,8 +84,7 @@ def decrypt(path, password):
     except:
         print("Failed to decrypt")
         return None
-    raise Exception(encrypted.decode() + "", "xxx: " + decrypted.decode()) # TODO: remove
-    return decrypted.decode()
+    return decrypted.decode().replace("\r\n", "\\r\\n")
 
 def encrypt(path, password, dataString):
     # Get Key and Paths
